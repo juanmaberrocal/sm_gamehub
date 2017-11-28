@@ -30,6 +30,9 @@ gem 'devise_token_auth'
 # Use Ominauth of OAuth authentication
 gem 'omniauth'
 
+# Use Cancan for authorization
+gem 'cancan'
+
 # Use Webpacker for JS Component
 gem 'webpacker'
 # Use React framework
