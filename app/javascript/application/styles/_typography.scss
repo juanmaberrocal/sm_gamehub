@@ -1,0 +1,9 @@
+$web-font-path: "https://fonts.googleapis.com/css?family=Roboto:300,400,500 !default";
+@import url($web-font-path);
+
+$roboto: 'Roboto', serif;
+
+html {
+    font-family: $roboto;
+    font-weight: normal;
+}
