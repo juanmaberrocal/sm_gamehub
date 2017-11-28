@@ -39,6 +39,10 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     arel (8.0.0)
+    axiom-types (0.1.1)
+      descendants_tracker (~> 0.0.4)
+      ice_nine (~> 0.11.0)
+      thread_safe (~> 0.3, >= 0.3.1)
     babel-source (5.8.35)
     babel-transpiler (0.7.0)
       babel-source (>= 4.0, < 6)
@@ -47,9 +51,13 @@ GEM
     builder (3.2.3)
     byebug (9.1.0)
     cancan (1.6.10)
+    coercible (1.0.0)
+      descendants_tracker (~> 0.0.1)
     concurrent-ruby (1.0.5)
     connection_pool (2.2.1)
     crass (1.0.3)
+    descendants_tracker (0.0.4)
+      thread_safe (~> 0.3, >= 0.3.1)
     devise (4.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -59,14 +67,32 @@ GEM
     devise_token_auth (0.1.42)
       devise (> 3.5.2, <= 4.3)
       rails (< 6)
+    equalizer (0.0.11)
     erubi (1.7.0)
     execjs (2.7.0)
     ffi (1.9.18)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    grape (1.0.1)
+      activesupport
+      builder
+      mustermann-grape (~> 1.0.0)
+      rack (>= 1.3.0)
+      rack-accept
+      virtus (>= 1.0.0)
+    grape-rabl (0.4.3)
+      grape
+      i18n
+      rabl
+      tilt
+    grape_devise_token_auth (0.1.4)
+      devise (>= 3.3)
+      devise_token_auth (>= 0.1.32)
+      grape (> 0.9.0)
     hashie (3.5.6)
     i18n (0.9.1)
       concurrent-ruby (~> 1.0)
+    ice_nine (0.11.2)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -80,6 +106,9 @@ GEM
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
+    mustermann (1.0.1)
+    mustermann-grape (1.0.0)
+      mustermann (~> 1.0.0)
     nio4r (2.1.0)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
@@ -89,7 +118,11 @@ GEM
     orm_adapter (0.5.0)
     pg (0.21.0)
     puma (3.11.0)
+    rabl (0.13.1)
+      activesupport (>= 2.3.14)
     rack (2.0.3)
+    rack-accept (0.4.5)
+      rack (>= 0.4)
     rack-proxy (0.6.2)
       rack
     rack-test (0.8.2)
@@ -148,6 +181,11 @@ GEM
     tilt (2.0.8)
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
+    virtus (1.0.5)
+      axiom-types (~> 0.1)
+      coercible (~> 1.0)
+      descendants_tracker (~> 0.0, >= 0.0.3)
+      equalizer (~> 0.0, >= 0.0.9)
     warden (1.2.7)
       rack (>= 1.0)
     webpacker (3.0.2)
@@ -165,6 +203,9 @@ DEPENDENCIES
   byebug
   cancan
   devise_token_auth
+  grape
+  grape-rabl
+  grape_devise_token_auth
   listen (>= 3.0.5, < 3.2)
   omniauth
   pg (~> 0.18)

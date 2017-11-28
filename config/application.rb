@@ -1,16 +1,16 @@
 require_relative 'boot'
 
-require "rails"
+require 'rails'
 # Pick the frameworks you want:
-require "active_model/railtie"
-require "active_job/railtie"
-require "active_record/railtie"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-require "action_view/railtie"
-require "action_cable/engine"
-# require "sprockets/railtie"
-require "rails/test_unit/railtie"
+require 'active_model/railtie'
+require 'active_job/railtie'
+require 'active_record/railtie'
+require 'action_controller/railtie'
+require 'action_mailer/railtie'
+require 'action_view/railtie'
+require 'action_cable/engine'
+# require 'sprockets/railtie'
+require 'rails/test_unit/railtie'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -29,5 +29,18 @@ module SmGamehub
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Load Grape API endpoints
+    config.paths.add File.join('app', 'controllers', 'api'), glob: File.join('**', '*.rb')
+    config.autoload_paths += Dir[Rails.root.join('app', 'controllers', 'api', '*')]
+
+    # Setup Devise authentication with Grape API
+    GrapeDeviseTokenAuth.setup!
+
+    # Define custom middleware
+    config.middleware.use(Rack::Config) do |env|
+      # Rabl formatter configurations
+      env['api.tilt.root'] = Rails.root.join('app', 'views', 'api')
+    end
   end
 end

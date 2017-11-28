@@ -2,10 +2,23 @@ import React               from "react";
 import { connect }         from "react-redux";
 import LinkButton     from "../utils/LinkButton";
 
+import { apiRequest } from "../../initializers/api";
+
 class PrivateTest extends React.Component {
+
+    handleClick(e) {
+        e.preventDefault();
+
+        apiRequest("/api/v1/users").then((resp) => {
+            console.log(resp)
+        });
+    }
+
     render() {
     	console.log("hello?")
-        return <LinkButton to="/login" text="Log In Now!" />
+        // return <LinkButton to="/login" text="Log In Now!" />
+
+        return <button onClick={this.handleClick}>Try me</button>
     }
 }
 

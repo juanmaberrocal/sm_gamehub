@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   # Main App wrapper
   root to: 'web_app#index', defaults: { format: 'html' }
 
+  # Grape API endpoints
+  mount API::Endpoints, at: '/api'
+
   # Route all html requests to main App
   get '*web_app', to: 'web_app#index'
 end
