@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable # :confirmable,
   include DeviseTokenAuth::Concerns::User
+  include DeviseOverrides::User
 
   # Belongs
   belongs_to :role
@@ -11,6 +12,7 @@ class User < ActiveRecord::Base
   # Callbacks
   before_validation :default_role, if: proc { |user| user.role_id.blank? }
 
+  # Instance methods
   def role?
     role.name.to_sym
   end
