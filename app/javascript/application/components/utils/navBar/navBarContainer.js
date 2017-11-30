@@ -4,6 +4,7 @@ import { connect }    from "react-redux";
 import {
     isPrivateRoute
 } from "../../../initializers/routes";
+import { logout }     from "../authorizor/actions";
 
 import NavBar         from "./NavBar";
 
@@ -18,7 +19,11 @@ class NavBarContainer extends React.Component {
     }
 
     render() {
-        return (this.displayNavBar() ? <NavBar /> : null);
+        return this.displayNavBar() ?
+            (<NavBar 
+                isRegistered={this.props.currentUser.isRegistered}
+                handleLogOut={this.props.logout} />) :
+            null;
     }
 }
 
@@ -30,6 +35,7 @@ const mapStateToProps = (state, ownProps) => (
 
 const mapDispatchToProps = (dispatch) => (
     {
+        logout: () => (dispatch(logout()))
     }
 );
 

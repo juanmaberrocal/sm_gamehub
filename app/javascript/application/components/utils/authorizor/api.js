@@ -43,6 +43,17 @@ class AuthorizeApi {
             });
     }
 
+    static logout(){
+        return Auth.signOut()
+            .then((response) => {
+                console.log(response)
+                return response.data;
+            })
+            .catch((error) => {
+                throw new Error(error.reason);
+            });
+    }
+
     static authorize(){
         return Auth.validateToken()
             .then((response) => {

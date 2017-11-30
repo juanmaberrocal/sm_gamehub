@@ -21,21 +21,19 @@ const configs = {};
 const Form = (props) => {
     const { children, classes } = props;
 
-    const header = (
-        <div>
-            <Typography type="headline" component="h3">
-                {props.header}
-            </Typography>
-            <Divider light />
-        </div>
-    );
-
     return (
         <form className={classes.container}
             noValidate
             autoComplete="off"
             onSubmit={props.onSubmit} >
-            {props.header && header}
+            {props.header && (
+                <div>
+                    <Typography type="headline" component="h3">
+                        {props.header}
+                    </Typography>
+                    <Divider light />
+                </div>
+            )}
             {children}
             <div className={classes.footer} >
                 <Button raised
@@ -46,7 +44,7 @@ const Form = (props) => {
                 </Button>
             </div>
         </form>
-    )
+    );
 };
 
 Form.propTypes = {
