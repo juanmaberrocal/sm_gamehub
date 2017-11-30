@@ -14,57 +14,25 @@ module API
           authenticate_user!
         end
 
-        # Make the authentication required for any of these API
-        # this might have to change later when public enpoints are moved to grape API structure
-        # before do
-          # header 'commit', SmConfiguration::Accessor.version.try(:to_s)
-          # header 'version-timestamp', SmConfiguration::Accessor.js_timestamp.try(:to_s)
-
-          # if self.namespace == "/integration"
-          #   # Integration APIs will have a different auth schema, for now it's a simple secret token but in the future will be something better
-          #   unauthorized  unless self.headers["Integrationtoken"] == Rails.configuration.integration_token
-          # else
-          #   unauthorized  unless current_user || options[:route_options][:skip_authentication]
-          # end
-
-          # # audit
-          # ::PaperTrail.whodunnit = current_user.to_s(current_organization.id) if current_user && current_organization
-        # end
-
         helpers do
-
-          # def action_parameters
-          #   @parameters ||= ActionController::Parameters.new(params)
-          #   @parameters
-          # end
-
-          # def current_user
-          #   @current_user = request.env['account']
-          #   @current_user
-          # end
-
-          def bad_request (error_msg = 'Bad Request')
+          def bad_request(error_msg = 'Bad Request')
             error!({ success: false, error_code: 400, error_msg: error_msg }, 400)
           end
 
-          def unauthorized (error_msg = 'Unauthorized')
+          def unauthorized(error_msg = 'Unauthorized')
             error!({ success: false, error_code: 401, error_msg: error_msg }, 401)
           end
 
-          def forbidden (error_msg = 'Forbidden')
+          def forbidden(error_msg = 'Forbidden')
             error!({ success: false, error_code: 403, error_msg: error_msg }, 403)
           end
 
-          def unprocessable_entity (model, error_msg = '')
+          def unprocessable_entity(model, error_msg = '')
             message = error_msg.present? ? error_msg : model.errors
-            error!({errorCode: "Validation Error", errorDescription: message}, 422)
+            error!({ success: false, error_code: 422, error_msg: message }, 422)
           end
 
-          def unprocessable_entity_custom_message (error_msg)
-            error!({errorCode: "Validation Error", errorDescription: error_msg}, 422)
-          end
-
-          def entity_not_found (error_msg = 'Not Found')
+          def entity_not_found(error_msg = 'Not Found')
             error!({ success: false, error_code: 404, error_msg: error_msg }, 404)
           end
 

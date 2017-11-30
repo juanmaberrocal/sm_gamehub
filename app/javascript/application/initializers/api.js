@@ -21,15 +21,21 @@ export const apiRequest = (path, method = "GET", body = {}) => {
         data.body = body;
     }
 
-    return buildApiRequest()(path, data).then((response) => {
-        Cookie.set("authHeaders", {
-            "access-token": response.headers.map["access-token"],
-            "token-type": response.headers.map["token-type"],
-            "client": response.headers.map["client"],
-            "expiry": response.headers.map["expiry"],
-            "uid": response.headers.map["uid"]
-        });
+    return buildApiRequest()(path, data)
+        .then((response) => {
+            Cookie.set("authHeaders", {
+                "access-token": response.headers.map["access-token"],
+                "token-type": response.headers.map["token-type"],
+                "client": response.headers.map["client"],
+                "expiry": response.headers.map["expiry"],
+                "uid": response.headers.map["uid"]
+            });
 
-        return response.json();
-    });
+            const status = response.status;
+            if (status >= 200 && status < 300 || status === 304){
+                return response.json();
+            }
+
+            throw new Error(response.statusText);
+        });
 };
