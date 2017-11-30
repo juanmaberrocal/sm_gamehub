@@ -2,27 +2,103 @@ import React          from "react";
 import PropTypes      from "prop-types";
 import { withStyles } from "material-ui/styles";
 
-import Divider        from "material-ui/Divider";
-import TextField      from "material-ui/TextField";
-import Typography     from "material-ui/Typography";
-import Form           from "../utils/Form";
-import GridNoUser     from "../utils/layout/GridNoUser";
-import LinkButton     from "../utils/LinkButton";
+import Stepper, {
+    Step, StepLabel, StepContent
+} from 'material-ui/Stepper';
+import Button         from 'material-ui/Button';
+import Typography     from 'material-ui/Typography';
 
 const styles = theme => ({
-    root: {}
+    button: {
+        marginRight: theme.spacing.unit
+    },
+    actionsContainer: {
+        marginTop: theme.spacing.unit,
+        marginBottom: theme.spacing.unit
+    },
+    resetContainer: {
+        marginTop: 0,
+        padding: theme.spacing.unit * 3 // TODO: See TODO note on Stepper
+    }
 });
 
-const Registration = (props) => {
-    const { classes, errors } = props;
+const configs = {
+    stepper: {
+        orientation: "vertical"
+    },
+    header: {
+        title: {
+            type: "title"
+        },
+        subtitle: {
+            type: "subheading"
+        }
+    }
+};
 
-    return (
-        <div className={classes.root}>
-            register me!
-        </div>
-    );
+class Registration extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        const { classes, activeStep } = this.props;
+        const steps = this.props.getSteps();
+
+        return (
+            <div>
+                <Typography
+                    type={configs.header.title.type}>
+                    Welcome to the Hub!
+                </Typography>
+                <Typography
+                    type={configs.header.subtitle.type}>
+                    Please complete your registration so you can join the fun.
+                </Typography>
+                <Stepper
+                    activeStep={activeStep}
+                    orientation={configs.stepper.orientation}>
+                    {steps.map((label, index) => {
+                        return (
+                            <Step key={label}>
+                                <StepLabel>{label}</StepLabel>
+                                <StepContent>
+                                    {this.props.getStepContent(index)}
+                                    <div
+                                        className={classes.actionContainer}>
+                                        <div>
+                                            <Button
+                                                disabled={activeStep === 0}
+                                                onClick={this.props.handleBack}
+                                                className={classes.button}>
+                                                Back
+                                            </Button>
+                                            <Button
+                                                raised
+                                                color="primary"
+                                                onClick={this.props.handleNext}
+                                                className={classes.button}>
+                                                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                            </Button>
+                                        </div>
+                                    </div>
+                                </StepContent>
+                            </Step>
+                        )
+                    })}
+                </Stepper>
+            </div>
+        )
+    }
 }
 
-Registration.propTypes = {};
+Registration.propTypes = {
+    classes: PropTypes.object.isRequired,
+    activeStep: PropTypes.number.isRequired,
+    getSteps: PropTypes.func.isRequired,
+    getStepContent: PropTypes.func.isRequired,
+    handleNext: PropTypes.func.isRequired,
+    handleBack: PropTypes.func.isRequired
+};
 
 export default withStyles(styles)(Registration);
