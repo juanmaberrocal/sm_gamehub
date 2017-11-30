@@ -11,6 +11,8 @@ class PrivateTest extends React.Component {
 
         apiRequest("/api/v1/users").then((resp) => {
             console.log(resp)
+        }).catch((error) => {
+            
         });
     }
 

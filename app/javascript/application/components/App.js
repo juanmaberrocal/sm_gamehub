@@ -3,8 +3,9 @@ import { Route }                       from "react-router";
 import { BrowserRouter }               from "react-router-dom";
 import { publicRoutes, privateRoutes } from "../initializers/routes";
 
+import Wrapper                         from "./utils/layout/Wrapper";
+import Main                            from "./utils/layout/Main";
 import Authorizor                      from "./utils/authorizor/Authorizor";
-import FlashContainer                  from "./utils/flash/FlashContainer";
 
 import {
     MuiThemeProvider,
@@ -18,9 +19,8 @@ const theme = createMuiTheme();
 const App = () => (
     <BrowserRouter basename={baseUrl}>
         <MuiThemeProvider theme={theme}>
-            <FlashContainer />
-            <div className="wrapper">
-                <div className="main">
+            <Wrapper>
+                <Main>
                     {publicRoutes.map((route, i) => (
                         <Route
                             key={i}
@@ -40,8 +40,8 @@ const App = () => (
                                 component={route.component} />
                         ))}
                     </Authorizor>
-                </div>
-            </div>
+                </Main>
+            </Wrapper>
         </MuiThemeProvider>
      </BrowserRouter>
 );

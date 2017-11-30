@@ -4,11 +4,11 @@ import { withStyles } from "material-ui/styles";
 
 import Grid           from "material-ui/Grid";
 import Paper          from "material-ui/Paper";
-import LogoFull       from "./LogoFull";
+import LogoFull       from "../LogoFull";
 
 const styles = theme => ({
-    root: {
-        height: "100%",
+    typeContainer: {
+        height: "calc(100% + 16px)",
         backgroundColor: "#32b4b9"
     },
     container: theme.mixins.gutters({
@@ -43,7 +43,7 @@ const GridNoUser = (props) => {
 
     return (
         <Grid container
-            className={classes.root}
+            className={classes.typeContainer}
             alignItems={configs.grid.alignItems}
             direction={configs.grid.direction}
             justify={configs.grid.justify} >

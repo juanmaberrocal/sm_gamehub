@@ -2,15 +2,16 @@ import LoginContainer  from "../components/login/LoginContainer";
 import SignupContainer from "../components/signup/SignupContainer";
 
 import PrivateTest from "../components/privatetest/PrivateTest";
+import RegistrationContainer from "../components/registration/RegistrationContainer";
 
 export const publicRoutes = [
     {
-        extact: true,
+        exact: true,
         path: "/login",
         component: LoginContainer
     },
     {
-        extact: true,
+        exact: true,
         path: "/signup",
         component: SignupContainer
     }
@@ -22,11 +23,18 @@ export const privateRoutes = [
         strict: true,
         path: "/",
         component: PrivateTest
+    },
+    {
+        exact: true,
+        strict: true,
+        path: "/registration",
+        component: RegistrationContainer
     }
 ];
 
 export const publicRoot = publicRoutes[0].path;
 export const privateRoot = privateRoutes[0].path;
+export const registrationRoot = privateRoutes[1].path;
 
 export const isPublicRoute = (route) => {
     return publicRoutes.map(route => route.path).indexOf(route) !== -1;
