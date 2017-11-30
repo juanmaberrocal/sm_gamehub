@@ -28,6 +28,36 @@ const styles = theme => ({
   }
 });
 
+const configs = {
+    appBar: {
+        position: "fixed",
+        color: "primary"
+    },
+    title: {
+        color: "inherit"
+    },
+    menu: {
+        nav: {
+            icon: {
+                color: "contrast"
+            }
+        },
+        profile: {
+            icon: {
+                color: "contrast"
+            },
+            anchor: {
+                vertical: "top",
+                horizontal: "left",
+            },
+            transition: {
+                vertical: "top",
+                horizontal: "left",
+            }
+        }
+    }
+};
+
 class NavBar extends React.Component {
     constructor(props) {
         super(props);
@@ -63,42 +93,36 @@ class NavBar extends React.Component {
         return (
             <AppBar
                 className={classes.root}
-                position="fixed"
-                color="primary" >
+                position={configs.appBar.position}
+                color={configs.appBar.color} >
                 <Toolbar>
                     {isRegistered && (
                         <IconButton
                             className={classes.menuButton}
-                            color="contrast"
+                            color={configs.menu.nav.icon.color}
                             aria-label="Menu">
                             <MenuIcon />
                         </IconButton>
                     )}
                     <Typography
                         type="title"
-                        color="inherit"
+                        color={configs.title.color}
                         className={classes.flex}>
                         SM GameHub
                     </Typography>
                     <div>
                         <IconButton
-                            aria-owns={profileOpen ? "menu-profile" : null}
-                            aria-haspopup="true"
+                            color={configs.menu.profile.icon.color}
                             onClick={this.handleProfileOpen}
-                            color="contrast">
+                            aria-owns={profileOpen ? "menu-profile" : null}
+                            aria-haspopup="true" >
                             <AccountCircle />
                         </IconButton>
                         <Menu
                             id="menu-profile"
                             anchorEl={profileAnchor}
-                            anchorOrigin={{
-                                vertical: "top",
-                                horizontal: "left",
-                            }}
-                            transformOrigin={{
-                                vertical: "top",
-                                horizontal: "left",
-                            }}
+                            anchorOrigin={configs.menu.profile.anchor}
+                            transformOrigin={configs.menu.profile.transition}
                             open={profileOpen}
                             onRequestClose={this.handleProfileClose}>
                             {isRegistered && (
@@ -114,9 +138,9 @@ class NavBar extends React.Component {
 }
 
 NavBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  isRegistered: PropTypes.bool,
-  handleLogOut: PropTypes.func.isRequired
+    classes: PropTypes.object.isRequired,
+    isRegistered: PropTypes.bool,
+    handleLogOut: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(NavBar);

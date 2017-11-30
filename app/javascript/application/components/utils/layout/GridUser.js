@@ -8,15 +8,16 @@ import Paper           from "material-ui/Paper";
 const styles = theme => ({
     typeContainer: {
         height: "calc(100% + 16px)",
-        backgroundColor: "#32b4b9"
+        backgroundColor: "#32B4B9"
     },
     navBar: {
         height: 64,
         padding: 0
     },
     content: {
+        padding: 0,
         height: "calc(100% - 64px)",
-        padding: 0
+        backgroundColor: "#FFF"
     },
     container: theme.mixins.gutters({
         paddingTop: 16,
