@@ -1,18 +1,14 @@
-import React              from 'react';
-import { withRouter }     from 'react-router-dom';
-import { connect }        from "react-redux";
+import React           from 'react';
+import { withRouter }  from 'react-router-dom';
+import { connect }     from "react-redux";
+import {
+    validate,
+    isValid
+} from "../../utils/validator";
 
-import Registration       from "./Registration";
-import StepOneContainer   from "./steps/StepOneContainer";
-import StepTwoContainer   from "./steps/StepTwoContainer";
-import StepThreeContainer from "./steps/StepThreeContainer";
-
-const registrationSteps = [
-    'Complete Your Profile',
-    'Integrate with Slack',
-    'Select Games',
-    'Confirmation'
-];
+import Registration    from "./Registration";
+import stepsDefinition from "./stepsDefinition";
+import validationRules from "./validationRules";
 
 class RegistrationContainer extends React.Component {
     constructor(props) {
@@ -21,6 +17,18 @@ class RegistrationContainer extends React.Component {
         this.state = {
             activeStep: 0,
             registrationData: {
+                step1: {
+                    name: "",
+                    nickname: "",
+                    useFullName: false
+                },
+                step2: {
+                    sendSlackInvite: false,
+                    slackHandler: ""
+                },
+                step3: {}
+            },
+            registrationErrors: {
                 step1: {},
                 step2: {},
                 step3: {}
@@ -30,40 +38,57 @@ class RegistrationContainer extends React.Component {
         this.getSteps = this.getSteps.bind(this);
         this.getStepContent = this.getStepContent.bind(this);
         this.handleStepDataChange = this.handleStepDataChange.bind(this);
+        this.handleStepCheckboxChange = this.handleStepCheckboxChange.bind(this);
         this.handleNext = this.handleNext.bind(this);
         this.handleBack = this.handleBack.bind(this);
     }
 
     getSteps() {
-        return registrationSteps;
+        return Object.keys(stepsDefinition).map((index, i) => {
+            return stepsDefinition[index].name;
+        });
+    }
+
+    getStepProps(index) {
+        return stepsDefinition[index].props;
     }
 
     getStepContent(index) {
-        const { registrationData } = this.state;
-
-        switch(index) {
-            case 0:
-                return (<StepOneContainer
-                    formData={registrationData.step1}
-                    onChange={this.handleStepDataChange} />);
-            case 1:
-                return (<StepTwoContainer
-                    formData={registrationData.step2}
-                    onChange={this.handleStepDataChange} />);
-            case 2:
-                return (<StepThreeContainer
-                    formData={registrationData.step3}
-                    onChange={this.handleStepDataChange} />);
-            case 3:
-                // TODO
-        }
+        const stepDataName = "step" + (index + 1);
+        return stepsDefinition[index].content(
+            this.state.registrationData[stepDataName],
+            this.state.registrationErrors[stepDataName],
+            this.handleStepDataChange,
+            this.handleStepCheckboxChange
+        );
     }
 
-    handleStepDataChange(e) {
-        const field = e.target.id;
-        const value = e.target.value;
+    validateStepData() {
+        const { activeStep } = this.state;
 
-        const stepDataName = "step" + (this.state.activeStep + 1)
+        if (this.getStepProps(activeStep).optional === true){
+            return true;
+        }
+
+        const stepDataName = "step" + (activeStep + 1);
+        const values = Object.assign({}, this.state.registrationData[stepDataName]);
+        const errors = validate(values, validationRules[activeStep]);
+
+        if (!isValid(errors)){
+            let registrationErrors = Object.assign({}, this.state.registrationErrors);
+            registrationErrors[stepDataName] = errors;
+            this.setState({
+                registrationErrors: registrationErrors
+            });
+            return false;
+        }
+
+        return true;
+    }
+
+    setStepData(field, value) {
+        const { activeStep } = this.state;
+        const stepDataName = "step" + (activeStep + 1);
         let registrationData = Object.assign({}, this.state.registrationData);
         registrationData[stepDataName][field] = value;
 
@@ -72,16 +97,31 @@ class RegistrationContainer extends React.Component {
         });
     }
 
+    handleStepDataChange(e) {
+        const field = e.target.id;
+        const value = e.target.value;
+        this.setStepData(field, value);
+    }
+
+    handleStepCheckboxChange(e, value) {
+        const field = e.target.id;
+        this.setStepData(field, value);
+    }
+
     handleNext() {
+        if (!this.validateStepData()){
+            return;
+        }
+
         this.setState({
             activeStep: this.state.activeStep + 1
-        })
+        });
     }
 
     handleBack() {
         this.setState({
             activeStep: this.state.activeStep - 1
-        })
+        });
     }
 
     render() {
@@ -92,6 +132,7 @@ class RegistrationContainer extends React.Component {
             <Registration
                 activeStep={activeStep}
                 getSteps={this.getSteps}
+                getStepProps={this.getStepProps}
                 getStepContent={this.getStepContent}
                 handleNext={this.handleNext}
                 handleBack={this.handleBack} />

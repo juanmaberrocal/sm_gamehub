@@ -13,7 +13,7 @@ const styles = theme => ({
         marginRight: theme.spacing.unit
     },
     actionsContainer: {
-        marginTop: theme.spacing.unit,
+        marginTop: theme.spacing.unit * 2,
         marginBottom: theme.spacing.unit
     },
     resetContainer: {
@@ -60,12 +60,13 @@ class Registration extends React.Component {
                     orientation={configs.stepper.orientation}>
                     {steps.map((label, index) => {
                         return (
-                            <Step key={label}>
+                            <Step key={label}
+                                {...this.props.getStepProps(index)}>
                                 <StepLabel>{label}</StepLabel>
                                 <StepContent>
                                     {this.props.getStepContent(index)}
                                     <div
-                                        className={classes.actionContainer}>
+                                        className={classes.actionsContainer}>
                                         <div>
                                             <Button
                                                 disabled={activeStep === 0}
@@ -96,6 +97,7 @@ Registration.propTypes = {
     classes: PropTypes.object.isRequired,
     activeStep: PropTypes.number.isRequired,
     getSteps: PropTypes.func.isRequired,
+    getStepProps: PropTypes.func.isRequired,
     getStepContent: PropTypes.func.isRequired,
     handleNext: PropTypes.func.isRequired,
     handleBack: PropTypes.func.isRequired

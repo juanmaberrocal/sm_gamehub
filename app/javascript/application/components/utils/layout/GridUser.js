@@ -29,7 +29,8 @@ const configs = {
     grid: {
         direction: "row",
         justify: "center",
-        alignItems: "flex-start"
+        alignItems: "flex-start",
+        container: true
     },
     item: {
         size: {
@@ -52,6 +53,7 @@ const GridUser = (props) => {
     return (
         <Grid container
             className={classes.typeContainer}
+            container={configs.grid.container}
             alignItems={configs.grid.alignItems}
             direction={configs.grid.direction}
             justify={configs.grid.justify} >
