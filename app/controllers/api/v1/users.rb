@@ -3,16 +3,17 @@ module API
     class Users < Grape::API
       include API::V1::BaseEndpoint
 
-      # helpers do
-      # end
-
-      resource :users do
-        get '' do
-          User.all
+      helpers do
+        def rabl_path(path)
+          rabl_root("users/#{path}")
         end
       end
 
-
+      resource :users do
+        get '', rabl: rabl_path('index') do
+          User.all
+        end
+      end
     end
   end
 end

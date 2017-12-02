@@ -1,14 +1,17 @@
 module API
-  module V1
+  module Public
     module BaseEndpoint
       extend ActiveSupport::Concern
       include Rabler
-      include Authorizor
 
       included do
+        before do
+          @public = true
+        end
+
         helpers do
           def rabl_root(path)
-            "v1/#{path}"
+            "public/#{path}"
           end
         end
       end
