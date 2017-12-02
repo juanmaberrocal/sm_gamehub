@@ -10,3 +10,14 @@
 Role::ROLE_NAMES.each do |_, role_name|
   Role.find_or_create_by!(name: role_name)
 end
+
+# Create initial list of games
+[
+  { name: 'Fifa 17', category: 'sports', sub_category: 'soccer' },
+  { name: 'Rocket League', category: 'arcade', sub_category: nil },
+  { name: 'Mortal Kombat', category: 'fighting', sub_category: 'combat' },
+  { name: 'Worms Battleground', category: 'arcade', sub_category: 'platform' },
+  { name: 'Starwhals', category: 'arcade', sub_category: 'retro' }
+].each do |game_attrs|
+  Game.find_or_create_by!(game_attrs)
+end

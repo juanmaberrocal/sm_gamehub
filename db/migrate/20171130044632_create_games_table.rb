@@ -4,7 +4,7 @@ class CreateGamesTable < ActiveRecord::Migration[5.1]
     create_table :games do |t|
       t.string :name, null: false
       t.string :category
-      t.boolean :deleted
+      t.boolean :deleted, default: false
       t.timestamps
     end
   end
