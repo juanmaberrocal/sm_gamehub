@@ -1,5 +1,3 @@
-import AuthorizeApi from "./api";
-
 import {
     EMAIL_SIGNUP_REQUEST, EMAIL_SIGNUP_SUCCESS, EMAIL_SIGNUP_FAIL,
     email_signup

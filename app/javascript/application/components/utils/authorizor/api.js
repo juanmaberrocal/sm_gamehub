@@ -1,5 +1,5 @@
 import Auth               from "j-toker";
-import { AUTH_URL }       from "../../../initializers/api";
+import { AUTH_URL }       from "../../../utils/api";
 import { ERROR_MESSAGES } from "../../../utils/messages";
 
 Auth.configure({
