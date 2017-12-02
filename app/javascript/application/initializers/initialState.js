@@ -2,6 +2,11 @@ import { intl } from "./localization";
 
 export default {
     intl,
+    flash: {
+        message: "",
+        isOpen: false,
+        type: "default"
+    },
     currentUser: {
         isLoggedIn: undefined,
         isRegistered: null,
@@ -9,9 +14,9 @@ export default {
         fetching: false,
         error: null
     },
-    flash: {
-    	message: "",
-    	isOpen: false,
-    	type: "default"
+    games: {
+        data: [],
+        fetching: false,
+        error: null
     }
 };

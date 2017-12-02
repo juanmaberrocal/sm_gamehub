@@ -4,7 +4,7 @@ import { ConnectedRouter } from "react-router-redux";
 import createHistory       from 'history/createBrowserHistory';
 import configureStore      from "./initializers/configureStore";
 
-import App                 from "./components/App";
+import AppContainer        from "./components/AppContainer";
 import "./styles/main.scss";
 
 const history = createHistory(),
@@ -13,7 +13,7 @@ const history = createHistory(),
 const Index = () => (
     <Provider store={store}>
         <ConnectedRouter history={history}>
-            <App />
+            <AppContainer />
         </ConnectedRouter>
     </Provider>
 );
