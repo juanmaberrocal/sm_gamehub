@@ -1,12 +1,13 @@
+def rabl_path(path)
+  rabl_root("users/#{path}")
+end
+
 module API
   module V1
     class Users < Grape::API
       include API::V1::BaseEndpoint
 
       helpers do
-        def rabl_path(path)
-          rabl_root("users/#{path}")
-        end
       end
 
       resource :users do

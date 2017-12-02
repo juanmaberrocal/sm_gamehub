@@ -1,12 +1,13 @@
+def rabl_path(path)
+  rabl_root("games/#{path}")
+end
+
 module API
   module Public
     class Games < Grape::API
       include API::Public::BaseEndpoint
 
       helpers do
-        def rabl_path(path)
-          rabl_root("games/#{path}")
-        end
       end
 
       resource :games do

@@ -1,3 +1,7 @@
+def rabl_root(path)
+  "public/#{path}"
+end
+
 module API
   module Public
     module BaseEndpoint
@@ -10,9 +14,6 @@ module API
         end
 
         helpers do
-          def rabl_root(path)
-            "public/#{path}"
-          end
         end
       end
     end

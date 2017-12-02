@@ -1,3 +1,7 @@
+def rabl_root(path)
+  "v1/#{path}"
+end
+
 module API
   module V1
     module BaseEndpoint
@@ -7,9 +11,6 @@ module API
 
       included do
         helpers do
-          def rabl_root(path)
-            "v1/#{path}"
-          end
         end
       end
     end
