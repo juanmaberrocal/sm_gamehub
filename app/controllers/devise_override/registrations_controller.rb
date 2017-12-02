@@ -1,4 +1,4 @@
-module Users
+module DeviseOverride
   class RegistrationsController < Devise::RegistrationsController
     # DELETE /resource
     def destroy

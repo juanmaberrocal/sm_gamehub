@@ -2,10 +2,10 @@ Rails.application.routes.draw do
   # Mount devise authentication routes
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   mount_devise_token_auth_for 'User',
-                              at: 'auth',
-                              controllers: {
-                                registrations: 'users/registrations'
-                              }
+                              at: 'auth'
+                              # controllers: {
+                              #   registrations: 'devise_override/registrations'
+                              # }
 
   # Main App wrapper
   root to: 'web_app#index', defaults: { format: 'html' }
