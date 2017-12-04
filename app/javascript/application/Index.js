@@ -7,8 +7,8 @@ import configureStore      from "./initializers/configureStore";
 import AppContainer        from "./components/AppContainer";
 import "./styles/main.scss";
 
-const history = createHistory(),
-    store = configureStore(history);
+const history = createHistory();
+export const store = configureStore(history);
 
 const Index = () => (
     <Provider store={store}>

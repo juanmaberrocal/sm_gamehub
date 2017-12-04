@@ -21,7 +21,6 @@ export const fetch = () => {
         dispatch(fetch_request());
         return GamesApi.fetch()
             .then((games) => {
-                console.log(games)
                 dispatch(fetch_success(games));
             }).catch((error) => {
                 dispatch(fetch_fail(error));
