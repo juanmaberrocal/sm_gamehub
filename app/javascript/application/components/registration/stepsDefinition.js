@@ -1,7 +1,8 @@
-import React        from 'react';
-import StepOne      from "./steps/StepOne";
-import StepTwo      from "./steps/StepTwo";
-import StepThreeContainer from "./steps/StepThreeContainer";
+import React     from 'react';
+import StepOne   from "./steps/StepOne";
+import StepTwo   from "./steps/StepTwo";
+import StepThree from "./steps/StepThree";
+import StepFour from "./steps/StepFour";
 
 const stepsDefinition = {
     0: {
@@ -32,12 +33,13 @@ const stepsDefinition = {
     },
     2: {
         name: 'Select Games',
-        content: (data, errors, onChange, onCheck) => {
-            return (<StepThreeContainer
+        content: (games, data, errors, onChange, onCheck) => {
+            return (<StepThree
                     formData={data}
                     formErrors={errors}
                     onChange={onChange}
-                    onCheck={onCheck} />)
+                    onCheck={onCheck}
+                    games={games} />)
         },
         props: {
             optional: true
@@ -46,11 +48,8 @@ const stepsDefinition = {
     3: {
         name: 'Confirmation',
         content: (data, errors, onChange, onCheck) => {
-            return (<StepThreeContainer
-                    formData={data}
-                    formErrors={errors}
-                    onChange={onChange}
-                    onCheck={onCheck} />)
+            return (<StepFour
+                    formData={data} />)
         },
         props: {
             optional: false

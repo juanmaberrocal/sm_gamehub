@@ -1,16 +1,20 @@
-import React          from "react";
-import PropTypes      from "prop-types";
-import { withStyles } from "material-ui/styles";
+import React                 from "react";
+import PropTypes             from "prop-types";
+import { withStyles }        from "material-ui/styles";
 
-import Divider        from "material-ui/Divider";
+import Divider               from "material-ui/Divider";
 import {
+    FormControl,
     FormControlLabel,
     FormGroup,
     FormHelperText
 } from "material-ui/Form";
-import TextField      from "material-ui/TextField";
-import Typography     from 'material-ui/Typography';
-import Switch         from "material-ui/Switch";
+import Input, {
+    InputLabel,
+    InputAdornment
+} from 'material-ui/Input';
+import Typography            from 'material-ui/Typography';
+import Switch                from "material-ui/Switch";
 
 const styles = theme => ({
     container: {
@@ -18,9 +22,9 @@ const styles = theme => ({
         flexWrap: "wrap",
       },
       textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        marginTop: 0,
+        marginLeft: 0,
+        marginRight: 0,
+        marginTop: theme.spacing.unit,
         marginBottom: theme.spacing.unit * 2,
         width: 400,
       },
@@ -60,8 +64,8 @@ class stepTwo extends React.Component {
                             className={classes.switchField}
                             control={
                                 <Switch
-                                    inputProps={{id: "sendSlackInvite"}}
-                                    checked={this.props.formData.sendSlackInvite}
+                                    inputProps={{id: "sendSlackInvite", name: "sendSlackInvite"}}
+                                    checked={formData.sendSlackInvite}
                                     onChange={this.props.onCheck} />
                             }
                             label="Yes, I want to receive an invitation." />
@@ -82,15 +86,19 @@ class stepTwo extends React.Component {
                     If you have already received an invitation prior to signing up and registering,
                     please fill in your Slack handler below to activate the integration.
                 </Typography>
-                <TextField
-                    id="slackHandler"
-                    label="@Slack"
-                    className={classes.textField}
-                    margin="normal"
-                    fullWidth={false}
-                    value={formData.slackHandler}
-                    error={formErrors.slackHandler ? true : false}
-                    onChange={this.props.onChange} />
+                <FormControl
+                    className={classes.textField}>
+                    <InputLabel>Slack Handle</InputLabel>
+                    <Input
+                        id="slackHandle"
+                        name="slackHandle"
+                        margin="normal"
+                        fullWidth={false}
+                        value={formData.slackHandle}
+                        error={formErrors.slackHandle ? true : false}
+                        onChange={this.props.onChange}
+                        startAdornment={<InputAdornment position="start">@</InputAdornment>} />
+                </FormControl>
             </div>
         )
     }

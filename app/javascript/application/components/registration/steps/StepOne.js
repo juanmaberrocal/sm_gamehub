@@ -42,6 +42,7 @@ class StepOne extends React.Component {
                 <TextField
                     required
                     id="name"
+                    name="name"
                     label="Full Name"
                     className={classes.textField}
                     margin="normal"
@@ -52,6 +53,7 @@ class StepOne extends React.Component {
                 <TextField
                     required
                     id="nickname"
+                    name="nickname"
                     label="Nickname"
                     className={classes.textField}
                     margin="normal"
@@ -65,8 +67,8 @@ class StepOne extends React.Component {
                             className={classes.switchField}
                             control={
                                 <Switch
-                                    inputProps={{id: "useFullName"}}
-                                    checked={this.props.formData.useFullName}
+                                    inputProps={{id: "useFullName", name: "useFullName"}}
+                                    checked={formData.useFullName}
                                     onChange={this.props.onCheck} />
                             }
                             label="Use Full Name" />

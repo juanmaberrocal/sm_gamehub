@@ -24,9 +24,11 @@ class RegistrationContainer extends React.Component {
                 },
                 step2: {
                     sendSlackInvite: false,
-                    slackHandler: ""
+                    slackHandle: ""
                 },
-                step3: {}
+                step3: {
+                    games: []
+                }
             },
             registrationErrors: {
                 step1: {},
@@ -38,6 +40,7 @@ class RegistrationContainer extends React.Component {
         this.getSteps = this.getSteps.bind(this);
         this.getStepContent = this.getStepContent.bind(this);
         this.handleStepDataChange = this.handleStepDataChange.bind(this);
+        this.handleStepSwitchChange = this.handleStepSwitchChange.bind(this);
         this.handleStepCheckboxChange = this.handleStepCheckboxChange.bind(this);
         this.handleNext = this.handleNext.bind(this);
         this.handleBack = this.handleBack.bind(this);
@@ -54,13 +57,28 @@ class RegistrationContainer extends React.Component {
     }
 
     getStepContent(index) {
-        const stepDataName = "step" + (index + 1);
-        return stepsDefinition[index].content(
-            this.state.registrationData[stepDataName],
-            this.state.registrationErrors[stepDataName],
-            this.handleStepDataChange,
-            this.handleStepCheckboxChange
-        );
+        const stepDataName = `step${index + 1}`;
+        switch(index){
+            case 3: // confirmation
+                return stepsDefinition[index].content(
+                    this.state.registrationData
+                );
+            case 2: // game selection
+                return stepsDefinition[index].content(
+                    this.props.games,
+                    this.state.registrationData[stepDataName],
+                    this.state.registrationErrors[stepDataName],
+                    this.handleStepDataChange,
+                    this.handleStepCheckboxChange
+                );
+            default:
+                return stepsDefinition[index].content(
+                    this.state.registrationData[stepDataName],
+                    this.state.registrationErrors[stepDataName],
+                    this.handleStepDataChange,
+                    this.handleStepSwitchChange
+                );
+        }
     }
 
     validateStepData() {
@@ -70,7 +88,7 @@ class RegistrationContainer extends React.Component {
             return true;
         }
 
-        const stepDataName = "step" + (activeStep + 1);
+        const stepDataName = `step${activeStep + 1}`;
         const values = Object.assign({}, this.state.registrationData[stepDataName]);
         const errors = validate(values, validationRules[activeStep]);
 
@@ -87,9 +105,9 @@ class RegistrationContainer extends React.Component {
     }
 
     setStepData(field, value) {
-        const { activeStep } = this.state;
-        const stepDataName = "step" + (activeStep + 1);
         let registrationData = Object.assign({}, this.state.registrationData);
+        const { activeStep } = this.state;
+        const stepDataName = `step${activeStep + 1}`;
         registrationData[stepDataName][field] = value;
 
         this.setState({
@@ -97,15 +115,39 @@ class RegistrationContainer extends React.Component {
         });
     }
 
+    setStepCheckboxData(field, value, checked) {
+        let registrationData = Object.assign({}, this.state.registrationData);
+        const { activeStep } = this.state;
+        const stepDataName = `step${activeStep + 1}`;
+        const valueIndex = registrationData[stepDataName][field].indexOf(value);
+
+
+        if (checked && valueIndex === -1){
+            registrationData[stepDataName][field].push(value);
+        } else if (!checked && valueIndex !== -1) {
+            registrationData[stepDataName][field].splice(valueIndex, 1);
+        }
+
+        this.setState({
+            registrationData: registrationData
+        });
+    }
+
     handleStepDataChange(e) {
-        const field = e.target.id;
+        const field = e.target.name;
         const value = e.target.value;
         this.setStepData(field, value);
     }
 
-    handleStepCheckboxChange(e, value) {
-        const field = e.target.id;
+    handleStepSwitchChange(e, value) {
+        const field = e.target.name;
         this.setStepData(field, value);
+    }
+
+    handleStepCheckboxChange(e, checked) {
+        const field = e.target.name;
+        const value = e.target.id.split("_")[1];
+        this.setStepCheckboxData(field, value, checked);
     }
 
     handleNext() {
@@ -143,7 +185,8 @@ class RegistrationContainer extends React.Component {
 const mapStateToProps = (state, ownProps) => (
     {
         currentUser: state.currentUser,
-        currentUrl: ownProps.location.pathname
+        currentUrl: ownProps.location.pathname,
+        games: state.games.data
     }
 );
 
