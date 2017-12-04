@@ -77,7 +77,7 @@ class Registration extends React.Component {
                                             <Button
                                                 raised
                                                 color="primary"
-                                                onClick={this.props.handleNext}
+                                                onClick={activeStep === steps.length - 1 ? this.props.handleFinish : this.props.handleNext}
                                                 className={classes.button}>
                                                 {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                                             </Button>
@@ -99,8 +99,9 @@ Registration.propTypes = {
     getSteps: PropTypes.func.isRequired,
     getStepProps: PropTypes.func.isRequired,
     getStepContent: PropTypes.func.isRequired,
+    handleBack: PropTypes.func.isRequired,
     handleNext: PropTypes.func.isRequired,
-    handleBack: PropTypes.func.isRequired
+    handleFinish: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Registration);

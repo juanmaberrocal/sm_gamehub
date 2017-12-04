@@ -5,6 +5,7 @@ import {
     validate,
     isValid
 } from "../../utils/validator";
+import { register } from "../../api/users/actions";
 
 import Registration    from "./Registration";
 import stepsDefinition from "./stepsDefinition";
@@ -42,8 +43,9 @@ class RegistrationContainer extends React.Component {
         this.handleStepDataChange = this.handleStepDataChange.bind(this);
         this.handleStepSwitchChange = this.handleStepSwitchChange.bind(this);
         this.handleStepCheckboxChange = this.handleStepCheckboxChange.bind(this);
-        this.handleNext = this.handleNext.bind(this);
         this.handleBack = this.handleBack.bind(this);
+        this.handleNext = this.handleNext.bind(this);
+        this.handleFinish = this.handleFinish.bind(this);
     }
 
     getSteps() {
@@ -150,6 +152,12 @@ class RegistrationContainer extends React.Component {
         this.setStepCheckboxData(field, value, checked);
     }
 
+    handleBack() {
+        this.setState({
+            activeStep: this.state.activeStep - 1
+        });
+    }
+
     handleNext() {
         if (!this.validateStepData()){
             return;
@@ -160,10 +168,11 @@ class RegistrationContainer extends React.Component {
         });
     }
 
-    handleBack() {
-        this.setState({
-            activeStep: this.state.activeStep - 1
-        });
+    handleFinish() {
+        const { currentUser } = this.props;
+        const { registrationData } = this.state;
+
+        this.props.register(currentUser.user.id);
     }
 
     render() {
@@ -176,8 +185,9 @@ class RegistrationContainer extends React.Component {
                 getSteps={this.getSteps}
                 getStepProps={this.getStepProps}
                 getStepContent={this.getStepContent}
+                handleBack={this.handleBack}
                 handleNext={this.handleNext}
-                handleBack={this.handleBack} />
+                handleFinish={this.handleFinish} />
         );
     }
 }
@@ -186,12 +196,17 @@ const mapStateToProps = (state, ownProps) => (
     {
         currentUser: state.currentUser,
         currentUrl: ownProps.location.pathname,
-        games: state.games.data
+        games: state.games.data,
+        state: state
     }
 );
 
 const mapDispatchToProps = (dispatch) => (
     {
+        register: (id, data) => {
+            dispatch(register(id))
+                .then(() => (console.log("hey")))
+        }
     }
 );
 
