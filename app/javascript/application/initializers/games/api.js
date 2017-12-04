@@ -5,7 +5,7 @@ import {
 
 class GamesApi {
     static fetch(){
-        return publicRequest("/api/public/games")
+        return publicRequest(`${PUBLIC_URL}/games`)
             .then((response) => response)
             .catch((error) => {
                 throw new Error(error);

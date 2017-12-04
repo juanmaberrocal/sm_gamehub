@@ -5,8 +5,8 @@ import Cookie from "js-cookie";
 
 export const ROOT_URL = "";
 export const AUTH_URL = "";
-export const PUBLIC_URL = "/public";
-export const API_URL = "/v1";
+export const PUBLIC_URL = "/api/public";
+export const API_URL = "/api/v1";
 
 /*
 description:
