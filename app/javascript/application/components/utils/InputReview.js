@@ -24,6 +24,8 @@ const prettyPrintValue = (value) => {
     switch(typeof value){
         case "string":
             return (value === "" ? " - " : value);
+        case "boolean":
+            return (value === true ? "Yes" : "No");
         case "object":
             if (value instanceof Array){
                 return (value.length === 0 ? " - " : value.join(", "));
