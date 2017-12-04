@@ -6,7 +6,7 @@ import {
     AUTHORIZE_TOKEN_REQUEST, AUTHORIZE_TOKEN_SUCCESS, AUTHORIZE_TOKEN_FAIL
 } from "./actions";
 
-const currentUser = (state = initialState.currentUser, action) => {
+const authorizor = (state = initialState.currentUser, action) => {
     switch (action.type){
         case EMAIL_SIGNUP_REQUEST:
         case EMAIL_LOGIN_REQUEST:
@@ -20,7 +20,7 @@ const currentUser = (state = initialState.currentUser, action) => {
         case AUTHORIZE_TOKEN_SUCCESS:
             return Object.assign({}, state, {
                 isLoggedIn: true,
-                isRegistered: action.user.is_registered,
+                isRegistered: action.user.registration_complete,
                 user: action.user,
                 fetching: false,
                 error: null
@@ -53,4 +53,4 @@ const currentUser = (state = initialState.currentUser, action) => {
     }
 };
 
-export default currentUser;
+export default authorizor;
