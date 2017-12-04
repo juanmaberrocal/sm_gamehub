@@ -33,7 +33,7 @@ class stepFour extends React.Component {
     render() {
         const { classes } = this.props;
         const { formData } = this.props;
-        const selectedGames = getGameNames(formData.step3.games).sort().join(", ");
+        const selectedGames = getGameNames(formData.step3.games).sort();
 
         return (
             <div className={classes.container}>

@@ -20,8 +20,25 @@ const styles = theme => ({
 
 const configs = {};
 
+const prettyPrintValue = (value) => {
+    switch(typeof value){
+        case "string":
+            return (value === "" ? " - " : value);
+        case "object":
+            if (value instanceof Array){
+                return (value.length === 0 ? " - " : value.join(", "));
+            } else {
+                return (Object.keys(value).length === 0 ? " - " : value); // TODO: return pretty value
+            }
+        default:
+            return value;
+    }
+};
+
 const InputReview = (props) => {
     const { label, field, value, classes, ...opts } = props;
+    const reviewFieldName = `${field}Review`;
+    const prettyValue = prettyPrintValue(value); 
 
     return (
         <FormControl
@@ -29,15 +46,15 @@ const InputReview = (props) => {
             className={classes.textField}
             style={props.fullWidth ? {width: "100%"} : {}}>
             <InputLabel
-                htmlFor={`${props.field}Review`}>
-                {props.label}
+                htmlFor={reviewFieldName}>
+                {label}
             </InputLabel>
             <Input
                 className={classes.input}
                 disableUnderline={true}
-                id={`${props.field}Review`}
-                name={`${props.field}Review`}
-                value={props.value}
+                id={reviewFieldName}
+                name={reviewFieldName}
+                value={prettyValue}
                 {...opts} />
         </FormControl>
     );
