@@ -42,4 +42,3 @@ LinkButton.propTypes = {
 };
 
 export default withStyles(styles)(LinkButton);
-
