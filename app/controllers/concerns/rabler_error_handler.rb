@@ -1,3 +1,5 @@
+# concern module to rescue errors in grape api
+# - build rack errors in standard format
 module RablerErrorHandler
   extend ActiveSupport::Concern
 

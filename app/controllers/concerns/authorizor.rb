@@ -1,3 +1,6 @@
+# authorization concern module
+# loads devise helpers for grape api and
+# ensures all actions are authenticated
 module Authorizor
   extend ActiveSupport::Concern
 

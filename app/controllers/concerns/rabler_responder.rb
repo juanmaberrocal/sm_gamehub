@@ -1,3 +1,7 @@
+# description: build authorization headers hash based on
+#              original headers that were going to be returned
+# @headers: original grape headers
+# @return: headers hash
 def auth_headers(headers)
   {}.tap do |auth_header|
     auth_header['access-token'] = headers['Access-Token']
@@ -8,6 +12,10 @@ def auth_headers(headers)
   end
 end
 
+# concern module for grape standard returns
+# - build error returns in a standard format
+#   (include authorization headers to prevent logouts)
+# - build success returns
 module RablerResponder
   extend ActiveSupport::Concern
 
