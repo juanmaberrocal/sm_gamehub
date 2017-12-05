@@ -8,7 +8,7 @@ import { MuiThemeProvider }            from "material-ui/styles";
 import Wrapper                         from "./utils/layout/Wrapper";
 import Main                            from "./utils/layout/Main";
 import Authorizor                      from "./utils/authorizor/Authorizor";
-import PrivateRoute            from "./utils/PrivateRoute";
+import PrivateRoute                    from "./utils/PrivateRoute";
 
 const App = (props) => (
     <BrowserRouter basename={props.baseUrl}>
