@@ -8,6 +8,7 @@ import { MuiThemeProvider }            from "material-ui/styles";
 import Wrapper                         from "./utils/layout/Wrapper";
 import Main                            from "./utils/layout/Main";
 import Authorizor                      from "./utils/authorizor/Authorizor";
+import PrivateRoute            from "./utils/PrivateRoute";
 
 const App = (props) => (
     <BrowserRouter basename={props.baseUrl}>
@@ -25,7 +26,7 @@ const App = (props) => (
 
                     <Authorizor>
                         {privateRoutes.map((route, i) => (
-                            <Route
+                            <PrivateRoute
                                 key={i}
                                 path={route.path}
                                 exact={route.exact}

@@ -11,13 +11,13 @@ import {
 
 /*
 description: check if the current user in the state store
-             has already logged in
+             has been initialized
 @currentUser: current user state
 @return: boolean
 */
-export const isLoggedIn = (currentUser) => {
+export const isInitialized = (currentUser) => {
     if (currentUser &&
-        currentUser.isLoggedIn === true){
+        typeof currentUser.isLoggedIn !== "undefined"){
         return true;
     }
     return false;
@@ -25,13 +25,13 @@ export const isLoggedIn = (currentUser) => {
 
 /*
 description: check if the current user in the state store
-             has already registered
+             has already logged in
 @currentUser: current user state
 @return: boolean
 */
-export const isRegistered = (currentUser) => {
+export const isLoggedIn = (currentUser) => {
     if (currentUser &&
-        currentUser.isRegistered === true){
+        currentUser.isLoggedIn === true){
         return true;
     }
     return false;
@@ -52,17 +52,22 @@ class Authorizor extends React.Component {
     }
 
     /*
-    description: check if wrapped components need to be rendered
-                 this only needs to happen when 
-    return: boolean
+    description: check if component really needs to be rerendered
+                 since the authorizor is just a wrapper for the routes that
+                 require a user to be logged in, its rerender is only necessary
+                 when a user logs in and out
+    @nextProps:
+    @nextState:
+    @return: boolean
     */
-    redirectToLogin(currentUser) {
-        return (!isLoggedIn(currentUser));
-    }
+    shouldComponentUpdate(nextProps, nextState) {
+        // rerending of component should only occur when user log in state changes
+        if (this.props.currentUser.isLoggedIn !== nextProps.currentUser.isLoggedIn){
+            return true;
+        }
 
-    redirectToRegistration(currentUser, currentPath) {
-        return ((isLoggedIn(currentUser) && !isRegistered(currentUser)) &&
-            currentPath !== registrationRoot);
+        // by default do not rerender when user data is changed
+        return false;
     }
 
     /*
@@ -74,30 +79,22 @@ class Authorizor extends React.Component {
 		const { currentUser } = this.props;
         const path = this.props.location.pathname;
 
-        // check if the current user data has been fetched
-        // if still fetching do no rendering
-        if (typeof currentUser.isLoggedIn === "undefined" ||
-            currentUser.fetching === true){
+        // wait until initial authorization is finished before
+        // deciding which routes will be need to be rendered
+        if (!isInitialized(currentUser)){ return null; }
+
+        // check if user is logged in
+        // if not logged in we need to check if we have to boot the user back to login
+        // or just hide the authorized routes
+        if (!isLoggedIn(currentUser)){
+            if (isPrivateRoute(path)){
+                return (<Redirect to={{pathname: publicRoot, state: {from: path}}} />);
+            }
+
             return null;
         }
 
-        // if user data has been fetched check the state of the current user
-        // check if trying to access a private route
-        if (isPrivateRoute(path)){
-            // if accessing a private route
-            // first check if the current user has logged in
-            // then check if the current user has finished registering 
-            if (this.redirectToLogin(currentUser)){
-                // if not logged in boot back to the public root path
-                return (<Redirect to={{pathname: publicRoot, state: {from: path}}} />);
-            } else if (this.redirectToRegistration(currentUser, path)){
-                // if not registered boot back to registration path
-                return (<Redirect to={{pathname: registrationRoot, state: {from: path}}} />);
-            }
-        }
-
-        // if all authentication passes
-        // render children components
+        // if user is logged in then authorized routes are available
         return this.props.children;
 	}
 }

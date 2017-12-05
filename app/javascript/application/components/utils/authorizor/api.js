@@ -46,7 +46,6 @@ class AuthorizeApi {
     static logout(){
         return Auth.signOut()
             .then((response) => {
-                console.log(response)
                 return response.data;
             })
             .catch((error) => {
