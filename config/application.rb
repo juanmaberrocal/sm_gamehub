@@ -12,6 +12,8 @@ require 'action_cable/engine'
 # require 'sprockets/railtie'
 require 'rails/test_unit/railtie'
 
+# require_relative 'middleware/authorizor_middleware'
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -42,5 +44,7 @@ module SmGamehub
       # Rabl formatter configurations
       env['api.tilt.root'] = Rails.root.join('app', 'views', 'api')
     end
+
+    # config.middleware.use(AuthorizorMiddleware)
   end
 end
