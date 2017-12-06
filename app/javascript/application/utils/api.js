@@ -1,4 +1,4 @@
-// import 'babel-polyfill';
+// import "babel-polyfill";
 import fetch from "cross-fetch";
 import fetchDefaults from "fetch-defaults";
 import Cookie from "js-cookie";
@@ -6,7 +6,7 @@ import Cookie from "js-cookie";
 export const ROOT_URL = "";
 export const AUTH_URL = "";
 export const PUBLIC_URL = "/api/public";
-export const API_URL = "/api/v1";
+export const API_V1_URL = "/api/v1";
 
 /*
 description:
@@ -16,6 +16,8 @@ const buildRequest = () => (
     fetchDefaults(fetch, ROOT_URL, {
         headers: Object.assign({
             // header defaults
+            "Accept": "application/json",
+            "Content-Type": "application/json"
         }, Cookie.getJSON().authHeaders)
     })
 );
@@ -62,7 +64,7 @@ description: build request to authorized api
 export const apiRequest = (path, method = "GET", body = {}) => {
     let data = { method: method };
     if (method !== "GET" && method !== "HEAD"){
-        data.body = body;
+        data.body = JSON.stringify(body);
     }
 
     return buildRequest()(path, data)

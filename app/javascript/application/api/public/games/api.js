@@ -1,7 +1,7 @@
 import {
     PUBLIC_URL,
     publicRequest
-} from "../../utils/api";
+} from "../../../utils/api";
 
 class GamesApi {
     static fetch(){

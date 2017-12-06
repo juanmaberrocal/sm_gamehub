@@ -1,4 +1,4 @@
-import initialState from "../../../initializers/initialState";
+import initialState from "../../initializers/initialState";
 import {
     EMAIL_SIGNUP_REQUEST, EMAIL_SIGNUP_SUCCESS, EMAIL_SIGNUP_FAIL,
     EMAIL_LOGIN_REQUEST, EMAIL_LOGIN_SUCCESS, EMAIL_LOGIN_FAIL,

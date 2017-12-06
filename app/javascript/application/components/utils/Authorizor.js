@@ -2,12 +2,12 @@ import React               from "react";
 import { Route, Redirect } from "react-router";
 import { withRouter }      from "react-router-dom";
 import { connect }         from "react-redux";
-import { authorize_token } from "./actions";
+import { authorize_token } from "../../api/authorizor/actions";
 import {
 	publicRoot,
     registrationRoot,
     isPrivateRoute
-} from "../../../initializers/routes";
+} from "../../initializers/routes";
 
 /*
 description: check if the current user in the state store

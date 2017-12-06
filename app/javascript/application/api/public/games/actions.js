@@ -1,19 +1,19 @@
 import GamesApi from "./api";
 
-export const FETCH_REQUEST = "FETCH_REQUEST";
-export const FETCH_SUCCESS = "FETCH_SUCCESS";
-export const FETCH_FAIL = "FETCH_FAIL";
+export const PUBLIC_GAMES_FETCH_REQUEST = "PUBLIC_GAMES_FETCH_REQUEST";
+export const PUBLIC_GAMES_FETCH_SUCCESS = "PUBLIC_GAMES_FETCH_SUCCESS";
+export const PUBLIC_GAMES_FETCH_FAIL = "PUBLIC_GAMES_FETCH_FAIL";
 
 export const fetch_request = () => {
-    return { type: FETCH_REQUEST };
+    return { type: PUBLIC_GAMES_FETCH_REQUEST };
 };
 
 export const fetch_success = (games) => {
-    return { type: FETCH_SUCCESS, games };
+    return { type: PUBLIC_GAMES_FETCH_SUCCESS, games };
 };
 
 export const fetch_fail = (error) => {
-    return { type: FETCH_FAIL, error };
+    return { type: PUBLIC_GAMES_FETCH_FAIL, error };
 };
 
 export const fetch = () => {

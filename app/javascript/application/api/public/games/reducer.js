@@ -1,21 +1,21 @@
-import initialState from "../initialState";
+import initialState from "../../../initializers/initialState";
 import {
-    FETCH_REQUEST, FETCH_SUCCESS, FETCH_FAIL
+    PUBLIC_GAMES_FETCH_REQUEST, PUBLIC_GAMES_FETCH_SUCCESS, PUBLIC_GAMES_FETCH_FAIL
 } from "./actions";
 
 const games = (state = initialState.games, action) => {
     switch (action.type){
-        case FETCH_REQUEST:
+        case PUBLIC_GAMES_FETCH_REQUEST:
             return Object.assign({}, state, {
                 fetching: true
             });
-        case FETCH_SUCCESS:
+        case PUBLIC_GAMES_FETCH_SUCCESS:
             return Object.assign({}, state, {
                 data: action.games,
                 fetching: false,
                 error: null
             });
-        case FETCH_FAIL:
+        case PUBLIC_GAMES_FETCH_FAIL:
             return Object.assign({}, state, {
                 data: [],
                 fetching: false,

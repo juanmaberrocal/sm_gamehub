@@ -5,7 +5,10 @@ import {
     validate,
     isValid
 } from "../../utils/validator";
-import { register } from "../../api/users/actions";
+import {
+    put,
+    register
+} from "../../api/users/actions";
 
 import Registration    from "./Registration";
 import stepsDefinition from "./stepsDefinition";
@@ -169,10 +172,19 @@ class RegistrationContainer extends React.Component {
     }
 
     handleFinish() {
+        const self = this;
         const { currentUser } = this.props;
         const { registrationData } = this.state;
 
-        this.props.register(currentUser.user.id);
+        console.log(currentUser)
+        console.log(registrationData)
+
+        // console.log(this.props.updateStudent())
+
+        this.props.updateStudent(currentUser.user.id, {})
+            // .then(() => {
+            //     self.props.register(currentUser.user.id);
+            // });
     }
 
     render() {
@@ -203,10 +215,8 @@ const mapStateToProps = (state, ownProps) => (
 
 const mapDispatchToProps = (dispatch) => (
     {
-        register: (id, data) => {
-            dispatch(register(id))
-                .then(() => (console.log("hey")))
-        }
+        updateStudent: (id, data) => (dispatch(put(id, data))),
+        register: (id) => (dispatch(register(id)))
     }
 );
 

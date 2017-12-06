@@ -4,7 +4,7 @@ import { connect }    from "react-redux";
 import {
     isPrivateRoute
 } from "../../../initializers/routes";
-import { logout }     from "../authorizor/actions";
+import { logout }     from "../../../api/authorizor/actions";
 
 import NavBar         from "./NavBar";
 

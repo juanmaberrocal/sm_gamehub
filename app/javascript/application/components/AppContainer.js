@@ -1,7 +1,7 @@
 import React                   from "react";
 import { connect }             from "react-redux";
 import { createMuiTheme }      from "material-ui/styles";
-import { fetch as fetchGames } from "../initializers/games/actions";
+import { fetch as fetchGames } from "../api/public/games/actions";
 
 import App                     from "./App";
 

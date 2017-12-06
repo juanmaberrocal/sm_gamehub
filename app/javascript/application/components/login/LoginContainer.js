@@ -5,7 +5,7 @@ import {
     validate,
     isValid
 } from "../../utils/validator";
-import { email_login }     from "../utils/authorizor/actions";
+import { email_login }     from "../../api/authorizor/actions";
 import {
     show_default_flash,
     show_error_flash

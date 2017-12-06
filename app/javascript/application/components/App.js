@@ -7,7 +7,7 @@ import { publicRoutes, privateRoutes } from "../initializers/routes";
 import { MuiThemeProvider }            from "material-ui/styles";
 import Wrapper                         from "./utils/layout/Wrapper";
 import Main                            from "./utils/layout/Main";
-import Authorizor                      from "./utils/authorizor/Authorizor";
+import Authorizor                      from "./utils/Authorizor";
 import PrivateRoute                    from "./utils/PrivateRoute";
 
 const App = (props) => (

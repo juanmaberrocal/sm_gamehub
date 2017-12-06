@@ -2,7 +2,7 @@ import React               from "react";
 import { connect }         from "react-redux";
 import LinkButton     from "../utils/LinkButton";
 
-import { apiRequest } from "../../initializers/api";
+import { apiRequest } from "../../utils/api";
 
 class PrivateTest extends React.Component {
 
