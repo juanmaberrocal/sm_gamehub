@@ -26,6 +26,14 @@ class User < ActiveRecord::Base
     role.name.to_sym
   end
 
+  # description: set the registration timestamp to current time
+  # @return: save success boolean
+  def register!
+    raise 'User is already registered!' if registered_at.present?
+    self.registered_at = Time.now
+    save!
+  end
+
   private
 
   # description: set the role of a user as the default role

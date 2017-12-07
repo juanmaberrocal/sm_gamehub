@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171201130216) do
+ActiveRecord::Schema.define(version: 20171207052842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,7 +56,9 @@ ActiveRecord::Schema.define(version: 20171201130216) do
     t.datetime "updated_at", null: false
     t.bigint "role_id"
     t.datetime "deleted_at"
-    t.boolean "registration_complete", default: false
+    t.datetime "registered_at"
+    t.boolean "use_full_name", default: false
+    t.string "slack_handle"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
