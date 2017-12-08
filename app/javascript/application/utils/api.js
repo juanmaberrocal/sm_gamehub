@@ -30,6 +30,8 @@ const responseHeaders = (response) => {
         "expiry": response.headers.map["expiry"],
         "uid": response.headers.map["uid"]
     });
+
+    return response;
 };
 
 const responseHandler = (response)  => {
