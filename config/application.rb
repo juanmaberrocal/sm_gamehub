@@ -13,6 +13,7 @@ require 'action_cable/engine'
 require 'rails/test_unit/railtie'
 
 # require_relative 'middleware/authorizor_middleware'
+require_relative 'middleware/camel_case_response_middleware'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -46,5 +47,6 @@ module SmGamehub
     end
 
     # config.middleware.use(AuthorizorMiddleware)
+    config.middleware.use(CamelCaseResponseMiddleware)
   end
 end
