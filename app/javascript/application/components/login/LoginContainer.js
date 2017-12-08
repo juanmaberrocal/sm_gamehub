@@ -56,15 +56,26 @@ class LoginContainer extends React.Component {
             const self = this;
             self.props.login(this.state.email, this.state.password)
                 .then(() => {
-                    if (self.props.currentUser.error){
-                        self.props.showError(self.props.currentUser.error.message);
-                        return;
+                    if (!self.loginError()){
+                        self.loginSuccess();
                     }
-
-                    self.props.showFlash(SYSTEM_MESSAGES.welcomeBack);
-                    self.props.history.push(privateRoot);
                 });
         }
+    }
+
+    loginSuccess() {
+        this.props.showFlash(SYSTEM_MESSAGES.welcomeBack);
+        this.props.history.push(privateRoot);
+    }
+
+    loginError() {
+        const { currentUser } = this.props;
+        if (currentUser.error === null){
+            return false;
+        }
+
+        this.props.showError(currentUser.error.message);
+        return true;
     }
 
     render() {

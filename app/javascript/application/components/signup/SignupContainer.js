@@ -67,15 +67,26 @@ class SignupContainer extends React.Component {
             const self = this;
             self.props.signup(this.state.email, this.state.password, this.state.password_confirmation)
                 .then(() => {
-                    if (self.props.currentUser.error){
-                        self.props.showError(self.props.currentUser.error.message);
-                        return;
+                    if (!self.signupError()){
+                        self.signupSuccess();
                     }
-
-                    self.props.showFlash(SYSTEM_MESSAGES.welcome);
-                    self.props.history.push(privateRoot);
                 });
         }
+    }
+
+    signupSuccess() {
+        this.props.showFlash(SYSTEM_MESSAGES.welcome);
+        this.props.history.push(privateRoot);
+    }
+
+    signupError() {
+        const { currentUser } = this.props;
+        if (currentUser.error === null){
+            return false;
+        }
+
+        this.props.showError(currentUser.error.message);
+        return true;
     }
 
     render() {
