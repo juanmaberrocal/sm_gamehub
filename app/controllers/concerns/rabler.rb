@@ -21,5 +21,10 @@ module Rabler
 
     # use rabl formatter for json response
     formatter :json, Grape::Formatter::Rabl
+
+    # add camelize_response middleware
+    # to convert rabl formatted response
+    # to camel_case keys
+    # use CamelCaseResponse
   end
 end
