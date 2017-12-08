@@ -8,8 +8,8 @@ export const register_request = () => {
     return { type: USERS_REGISTER_REQUEST };
 };
 
-export const register_success = (games) => {
-    return { type: USERS_REGISTER_SUCCESS, games };
+export const register_success = () => {
+    return { type: USERS_REGISTER_SUCCESS };
 };
 
 export const register_fail = (error) => {

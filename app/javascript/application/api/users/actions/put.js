@@ -8,12 +8,12 @@ export const put_request = () => {
     return { type: USERS_PUT_REQUEST };
 };
 
-export const put_success = () => {
-    return { type: USERS_PUT_SUCCESS };
+export const put_success = (user) => {
+    return { type: USERS_PUT_SUCCESS, user };
 };
 
-export const put_fail = () => {
-    return { type: USERS_PUT_FAIL };
+export const put_fail = (error) => {
+    return { type: USERS_PUT_FAIL, error };
 };
 
 export const put = (id, data) => {
