@@ -1,17 +1,25 @@
 # base concern module for grape rabl responses
-# - parse params to snake case
+# - parse params to snakecase
 # - set rabl format response
 # - include rabl standard responses
 # - include rabl error rescues
+# - parse response to camelcase
 module Rabler
   extend ActiveSupport::Concern
-  include RablerParams
   include RablerResponder
   include RablerErrorHandler
+  include SnakeCaseParams
 
   included do
+    # set default content type to json
     format :json
-    parser :json, RablerParams
+
+    # use custom request parser
+    # to convert json formatted params
+    # to snake_case keys
+    parser :json, SnakeCaseParams
+
+    # use rabl formatter for json response
     formatter :json, Grape::Formatter::Rabl
   end
 end
