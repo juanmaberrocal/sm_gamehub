@@ -20,7 +20,7 @@ const authorizor = (state = initialState.currentUser, action) => {
         case AUTHORIZE_TOKEN_SUCCESS:
             return Object.assign({}, state, {
                 isLoggedIn: true,
-                isRegistered: action.user.registration_complete,
+                isRegistered: !!action.user.registeredAt,
                 user: action.user,
                 fetching: false,
                 error: null
