@@ -8,7 +8,7 @@ def auth_headers
     auth_header['access-token'] = headers['Access-Token']
     auth_header['client'] = headers['Client']
     auth_header['expiry'] = headers['Expiry']
-    auth_header['token'] = headers['Token']
+    auth_header['token-type'] = headers['Token-Type']
     auth_header['uid'] = headers['Uid']
   end
 end
