@@ -1,3 +1,4 @@
+#
 class AuthorizorMiddleware
   def initialize(app)
     @app = app
