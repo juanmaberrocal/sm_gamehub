@@ -6,13 +6,19 @@ import {
     isValid
 } from "../../utils/validator";
 import {
-    put,
-    register
+    put as updateStudent,
+    register as registerStudent
 } from "../../api/users/actions";
+import {
+    show_default_flash,
+    show_error_flash
+} from "../utils/flash/actions";
+import { privateRoot }     from "../../initializers/routes";
+import { SUCCESS_MESSAGES }  from "../../utils/messages";
 
-import Registration    from "./Registration";
-import stepsDefinition from "./stepsDefinition";
 import validationRules from "./validationRules";
+import stepsDefinition from "./stepsDefinition";
+import Registration    from "./Registration";
 
 class RegistrationContainer extends React.Component {
     constructor(props) {
@@ -109,6 +115,13 @@ class RegistrationContainer extends React.Component {
         return true;
     }
 
+    setPutData() {
+        const { registrationData } = this.state;
+        let putData = Object.assign({}, registrationData.step1, registrationData.step2);
+        delete putData.sendSlackInvite;
+        return putData;
+    }
+
     setStepData(field, value) {
         let registrationData = Object.assign({}, this.state.registrationData);
         const { activeStep } = this.state;
@@ -172,19 +185,41 @@ class RegistrationContainer extends React.Component {
     }
 
     handleFinish() {
+        this.register();
+    }
+
+    register() {
         const self = this;
         const { currentUser } = this.props;
-        const { registrationData } = this.state;
+        const userId = currentUser.user.id;
 
-        console.log(currentUser)
-        console.log(registrationData)
+        return this.props
+            .updateStudent(userId, this.setPutData())
+            .then(() => {
+                if (!self.registerError()){
+                    return self.props.registerStudent(userId)
+                        .then(() => {
+                            if (!self.registerError()){
+                                self.registerSuccess();
+                            }
+                        });
+                }
+            });
+    }
 
-        // console.log(this.props.updateStudent())
+    registerSuccess() {
+        this.props.showFlash(SUCCESS_MESSAGES.registrationComplete);
+        this.props.history.push(privateRoot);
+    }
 
-        this.props.updateStudent(currentUser.user.id, {})
-            // .then(() => {
-            //     self.props.register(currentUser.user.id);
-            // });
+    registerError() {
+        const { currentUser } = this.props;
+        if (currentUser.error === null){
+            return false;
+        }
+
+        this.props.showError(currentUser.error.message);
+        return true;
     }
 
     render() {
@@ -215,8 +250,10 @@ const mapStateToProps = (state, ownProps) => (
 
 const mapDispatchToProps = (dispatch) => (
     {
-        updateStudent: (id, data) => (dispatch(put(id, data))),
-        register: (id) => (dispatch(register(id)))
+        updateStudent: (id, data) => (dispatch(updateStudent(id, data))),
+        registerStudent: (id) => (dispatch(registerStudent(id))),
+        showFlash: (msg) => (dispatch(show_default_flash(msg))),
+        showError: (msg) => (dispatch(show_error_flash(msg)))
     }
 );
 
